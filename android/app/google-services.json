@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "901082623271",
+    "project_id": "vandad-flutter-course",
+    "storage_bucket": "vandad-flutter-course.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901082623271:android:1a8459f018b3a129450d02",
+        "android_client_info": {
+          "package_name": "com.example.vandad_flutter_course"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901082623271-980huk7fn6v47jg36d0b2nmatt2bs2r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMrkz-dbRnFQIOaOWbcuUh-HVIUegYoFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901082623271-980huk7fn6v47jg36d0b2nmatt2bs2r8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
