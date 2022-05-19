@@ -56,11 +56,16 @@ class _RegisterViewState extends State<RegisterView> {
             onPressed: () async {
               final email = emailController.text;
               final password = passwordController.text;
-              final userCredential =
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
                 email: email,
                 password: password,
               );
+            },
+          ),
+          TextButton(
+            child: const Text('Already registered? Login here!'),
+            onPressed: () async {
+              Navigator.of(context).pushNamed('/Login');
             },
           ),
         ],

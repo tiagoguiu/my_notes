@@ -28,41 +28,56 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextField(
-          controller: emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(hintText: 'Enter with your email'),
-        ),
-        TextField(
-          controller: passwordController,
-          autocorrect: false,
-          enableSuggestions: false,
-          obscureText: true,
-          decoration:
-              const InputDecoration(hintText: 'Enter with your password'),
-        ),
-        TextButton(
-          child: const Text('Login'),
-          onPressed: () async {
-            try {
-              final email = emailController.text;
-              final password = passwordController.text;
-              final userCredential =
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
-                email: email,
-                password: password,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextField(
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            decoration:
+                const InputDecoration(hintText: 'Enter with your email'),
+          ),
+          TextField(
+            controller: passwordController,
+            autocorrect: false,
+            enableSuggestions: false,
+            obscureText: true,
+            decoration:
+                const InputDecoration(hintText: 'Enter with your password'),
+          ),
+          TextButton(
+            child: const Text('Login'),
+            onPressed: () async {
+              try {
+                final email = emailController.text;
+                final password = passwordController.text;
+                final userCredential =
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                print(userCredential);
+              } on FirebaseAuthException catch (e) {
+                print(e);
+              }
+            },
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/register',
+                (route) => false,
               );
-              print(userCredential);
-            } on FirebaseAuthException catch (e) {
-              print(e);
-            }
-          },
-        ),
-      ],
+            },
+            child: const Text('Not registered yet? register here!'),
+          ),
+        ],
+      ),
     );
   }
 }
