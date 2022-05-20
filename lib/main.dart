@@ -18,15 +18,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Vandad Flutter Course',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/home',
       routes: {
-        '/home' : (context) => const HomeView(),
-        '/login' : (context) => const LoginView(),
-        '/register' :(context) => const RegisterView(),
+        '/home': (context) => const HomeView(),
+        '/login': (context) => const LoginView(),
+        '/register': (context) => const RegisterView(),
+        '/notes-view': (context) => const NotesView(),
       },
     );
   }

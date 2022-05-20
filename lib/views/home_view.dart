@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:vandad_flutter_course/views/login_view.dart';
-import 'package:vandad_flutter_course/views/verify_email_view.dart';
+import 'package:vandad_flutter_course/views/views.dart';
 
 import '../firebase_options.dart';
 
@@ -21,14 +20,13 @@ class HomeView extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                print('Email is verified');
+                return const NotesView();
               } else {
                 return const VerifyEmailView();
               }
             } else {
               return const LoginView();
             }
-            return const Text('Done');
           default:
             return const CircularProgressIndicator();
         }
