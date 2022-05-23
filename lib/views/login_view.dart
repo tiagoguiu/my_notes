@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
 
+import '../utils/utils.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -66,7 +68,9 @@ class _LoginViewState extends State<LoginView> {
                   (route) => false,
                 );
               } on FirebaseAuthException catch (e) {
-                e.toString();
+                await showErrorDialog(context: context, text: e.code);
+              } catch (error){
+                await showErrorDialog(context: context, text: error.toString());
               }
             },
           ),
