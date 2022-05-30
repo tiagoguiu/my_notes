@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
+import 'package:vandad_flutter_course/utils/utils.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -55,12 +56,20 @@ class _RegisterViewState extends State<RegisterView> {
           TextButton(
             child: const Text('Register'),
             onPressed: () async {
-              final email = emailController.text;
-              final password = passwordController.text;
-              await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                email: email,
-                password: password,
-              );
+              try {
+                final email = emailController.text;
+                final password = passwordController.text;
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+                Navigator.of(context).pushNamed(AppRoutes.verifyEmailRoute);
+              } on FirebaseAuthException catch (error) {
+                await showErrorDialog(context: context, text: error.code);
+              } catch (e) {
+                await showErrorDialog(context: context, text: e.toString());
+              }
             },
           ),
           TextButton(
