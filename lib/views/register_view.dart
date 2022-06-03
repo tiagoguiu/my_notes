@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
+import 'package:vandad_flutter_course/services/auth/auth.dart';
 import 'package:vandad_flutter_course/utils/utils.dart';
 
 class RegisterView extends StatefulWidget {
@@ -59,16 +59,19 @@ class _RegisterViewState extends State<RegisterView> {
               try {
                 final email = emailController.text;
                 final password = passwordController.text;
-                await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: email,
-                  password: password,
+                await AuthService.firebase().createUser(
+                  params: AuthProviderParams(email: email, password: password),
                 );
-                await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+                await AuthService.firebase().sendEmailVerification();
                 Navigator.of(context).pushNamed(AppRoutes.verifyEmailRoute);
-              } on FirebaseAuthException catch (error) {
-                await showErrorDialog(context: context, text: error.code);
-              } catch (e) {
-                await showErrorDialog(context: context, text: e.toString());
+              } on WeekPasswordAuthException {
+                await showErrorDialog(context: context, text: 'Week password');
+              } on EmailAlreadyInUseAuthException {
+                await showErrorDialog(context: context, text: 'Email already in use');
+              } on InvalidEmailAuthException {
+                await showErrorDialog(context: context, text: 'Invalid email');
+              } on GenericAuthException {
+                await showErrorDialog(context: context, text: 'Something went wrong, try again');
               }
             },
           ),

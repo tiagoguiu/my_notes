@@ -8,6 +8,10 @@ class AuthService implements AuthProvider {
     required this.provider,
   });
 
+  factory AuthService.firebase() => AuthService(
+        provider: FirebaseAuthProvider(),
+      );
+
   @override
   Future<AuthUser> createUser({required AuthProviderParams params}) =>
       provider.createUser(params: params);
@@ -24,4 +28,7 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
+
+  @override
+  Future<void> initialize() => provider.initialize();
 }

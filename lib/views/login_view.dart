@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
+import 'package:vandad_flutter_course/services/auth/auth.dart';
 
 import '../utils/utils.dart';
 
@@ -59,27 +59,31 @@ class _LoginViewState extends State<LoginView> {
               try {
                 final email = emailController.text;
                 final password = passwordController.text;
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: email,
-                  password: password,
+
+                await AuthService.firebase().logIn(
+                  params: AuthProviderParams(
+                    email: email,
+                    password: password,
+                  ),
                 );
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified ?? false) {
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailVerified ?? false) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRoutes.notesRoute,
-                  (route) => false,
-                );
+                    AppRoutes.notesRoute,
+                    (route) => false,
+                  );
                 } else {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRoutes.verifyEmailRoute,
-                  (route) => false,
-                );
+                    AppRoutes.verifyEmailRoute,
+                    (route) => false,
+                  );
                 }
-                
-              } on FirebaseAuthException catch (e) {
-                await showErrorDialog(context: context, text: e.code);
-              } catch (error) {
-                await showErrorDialog(context: context, text: error.toString());
+              } on UserNotFoundAuthException {
+                await showErrorDialog(context: context, text: 'User not found');
+              } on WrongPasswordAuthException {
+                await showErrorDialog(context: context, text: 'Wrong credentials');
+              } on GenericAuthException {
+                await showErrorDialog(context: context, text: 'Something went wrong, try again');
               }
             },
           ),
