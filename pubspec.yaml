@@ -2,28 +2,13 @@ name: vandad_flutter_course
 description: A new Flutter project.
 
 
-
 publish_to: 'none' 
-
-
-
-
-
-
-
-
-
 
 
 version: 1.0.0+1
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
-
-
-
-
-
 
 
 dependencies:
@@ -35,60 +20,16 @@ dependencies:
   firebase_analytics: ^9.1.7
   sqflite: ^2.0.2+1
   path_provider: ^2.0.10
-  path: ^1.8.2
+  path: ^1.8.1
   
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  
-  
-  
-  
-  
   flutter_lints: ^1.0.0
   test: ^1.21.1
 
 
-
-
-
-flutter:
-
-  
-  
-  
+flutter: 
   uses-material-design: true
-
-  
-  
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
