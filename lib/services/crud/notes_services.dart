@@ -69,7 +69,7 @@ class NotesService {
   Future<void> _ensureDbIsOpen() async {
     try {
       await open();
-    } on DataBaseAlreadyOpenException catch (e) {}
+    } on DataBaseAlreadyOpenException catch (_) {}
   }
 
   Future<void> close() async {

@@ -32,8 +32,14 @@ class _NotesViewState extends State<NotesView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Main UI'),
+        title: const Text('Your notes'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.newNoteRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               switch (value) {
