@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
 import 'package:vandad_flutter_course/views/views.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   /*await Firebase.initializeApp(
@@ -24,12 +23,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AppRoutes.homeRoute,
       routes: {
-        AppRoutes.homeRoute : (context) => const HomeView(),
-        AppRoutes.loginRoute : (context) => const LoginView(),
-        AppRoutes.registerRoute : (context) => const RegisterView(),
-        AppRoutes.notesRoute : (context) => const NotesView(),
-        AppRoutes.verifyEmailRoute : (context) => const VerifyEmailView(),
-        AppRoutes.newNoteRoute : (context) => const NewNoteView(),
+        AppRoutes.homeRoute: (context) => const HomeView(),
+        AppRoutes.loginRoute: (context) => const LoginView(),
+        AppRoutes.registerRoute: (context) => const RegisterView(),
+        AppRoutes.notesRoute: (context) => const NotesView(),
+        AppRoutes.verifyEmailRoute: (context) => const VerifyEmailView(),
+        AppRoutes.createAndUpdateNotesRoute: (context) =>
+            const CreateUpdateNotesView(),
       },
     );
   }

@@ -4,5 +4,5 @@ class AppRoutes {
   static const String homeRoute = '/home';
   static const String registerRoute = '/register';
   static const String verifyEmailRoute = '/verify-email';
-  static const String newNoteRoute = '/notes/new-note';
+  static const String createAndUpdateNotesRoute = '/notes/new-note';
 }
