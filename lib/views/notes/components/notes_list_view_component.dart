@@ -1,13 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:vandad_flutter_course/services/crud/crud.dart';
+import 'package:vandad_flutter_course/services/cloud/cloud.dart';
 import 'package:vandad_flutter_course/utils/utils.dart';
 
-typedef NoteCallBack = void Function(DataBaseNote note);
+typedef NoteCallBack = void Function(CloudNote note);
 
 class NotesListViewComponent extends StatelessWidget {
-  final List<DataBaseNote> notes;
+  final Iterable<CloudNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onTap;
 
@@ -23,7 +22,7 @@ class NotesListViewComponent extends StatelessWidget {
     return ListView.builder(
       itemCount: notes.length,
       itemBuilder: (context, index) {
-        final note = notes[index];
+        final note = notes.elementAt(index);
         return ListTile(
           onTap: () {
             onTap(note);
