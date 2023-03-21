@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vandad_flutter_course/services/auth/auth.dart';
 import 'package:vandad_flutter_course/services/cloud/cloud.dart';
 import 'package:vandad_flutter_course/services/cloud/firebase_cloud_storage.dart';
+import 'package:vandad_flutter_course/utils/dialogs/cannot_share_empty_note_dialog.dart';
 import 'package:vandad_flutter_course/utils/utils.dart';
 
 class CreateUpdateNotesView extends StatefulWidget {
@@ -30,7 +32,7 @@ class _CreateUpdateNotesViewState extends State<CreateUpdateNotesView> {
       return existingNote;
     }
     final currentUser = AuthService.firebase().currentUser;
-    final userId = currentUser!.id ;
+    final userId = currentUser!.id;
     final newNote = await _notesService.createNewNote(ownerUserId: userId);
     _note = newNote;
     return newNote;
@@ -91,6 +93,19 @@ class _CreateUpdateNotesViewState extends State<CreateUpdateNotesView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Note'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final text = _textController.text;
+              if (text.isEmpty) {
+                await cannotShareEmptyNoteDialog(context: context);
+              } else {
+                await Share.share(text);
+              }
+            },
+            icon: const Icon(Icons.share),
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: createOrGetExistingNote(context),
