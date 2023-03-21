@@ -5,37 +5,37 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Run Debug Mode",
+      "request": "launch",
+      "type": "dart",
+      "program": "./lib/main.dart",
+      "flutterMode": "debug",
+    },
+    {
+      "name": "Run Profile Mode",
+      "request": "launch",
+      "type": "dart",
+      "program": "./lib/main.dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Run Release Mode",
+      "request": "launch",
+      "type": "dart",
+      "program": "./lib/main.dart",
+      "flutterMode": "release",
+    },
+    {
       "name": "Flutter: Run all Tests",
       "type": "dart",
       "request": "launch",
       "program": "./test/"
     },
-      {
-          "name": "Run All Tests",
-          "request": "launch",
-          "type": "dart",
-          "program": "./test/",
-      },
-      {
-          "name": "Run Debug Mode",
-          "request": "launch",
-          "type": "dart",
-          "program": "./lib/main.dart",
-          "flutterMode": "debug",
-      },
-      {
-          "name": "Run Profile Mode",
-          "request": "launch",
-          "type": "dart",
-          "program": "./lib/main.dart",
-          "flutterMode": "profile"
-      },
-      {
-          "name": "Run Release Mode",
-          "request": "launch",
-          "type": "dart",
-          "program": "./lib/main.dart",
-          "flutterMode": "release",
-      }
+    {
+      "name": "Run All Tests",
+      "request": "launch",
+      "type": "dart",
+      "program": "./test/",
+    },
   ]
 }
