@@ -19,10 +19,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-              "We've sent you an email verification. Please check your email"),
-          const Text(
-              "If you haven't received a verification email, press the button below"),
+          const Text("We've sent you an email verification. Please check your email"),
+          const Text("If you haven't received a verification email, press the button below"),
           TextButton(
             onPressed: () async {
               await AuthService.firebase().sendEmailVerification();
@@ -32,10 +30,12 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           TextButton(
             onPressed: () async {
               await AuthService.firebase().logOut();
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                AppRoutes.registerRoute,
-                (route) => false,
-              );
+              if (context.mounted) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoutes.registerRoute,
+                  (route) => false,
+                );
+              }
             },
             child: const Text('Restart'),
           ),

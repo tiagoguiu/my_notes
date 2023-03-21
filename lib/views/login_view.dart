@@ -42,16 +42,14 @@ class _LoginViewState extends State<LoginView> {
           TextField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration:
-                const InputDecoration(hintText: 'Enter with your email'),
+            decoration: const InputDecoration(hintText: 'Enter with your email'),
           ),
           TextField(
             controller: passwordController,
             autocorrect: false,
             enableSuggestions: false,
             obscureText: true,
-            decoration:
-                const InputDecoration(hintText: 'Enter with your password'),
+            decoration: const InputDecoration(hintText: 'Enter with your password'),
           ),
           TextButton(
             child: const Text('Login'),
@@ -68,15 +66,19 @@ class _LoginViewState extends State<LoginView> {
                 );
                 final user = AuthService.firebase().currentUser;
                 if (user?.isEmailVerified ?? false) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.notesRoute,
-                    (route) => false,
-                  );
+                  if (context.mounted) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.notesRoute,
+                      (route) => false,
+                    );
+                  }
                 } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.verifyEmailRoute,
-                    (route) => false,
-                  );
+                  if (context.mounted) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.verifyEmailRoute,
+                      (route) => false,
+                    );
+                  }
                 }
               } on UserNotFoundAuthException {
                 await showErrorDialog(context: context, text: 'User not found');

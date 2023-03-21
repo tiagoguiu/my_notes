@@ -42,16 +42,14 @@ class _RegisterViewState extends State<RegisterView> {
           TextField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration:
-                const InputDecoration(hintText: 'Enter with your email'),
+            decoration: const InputDecoration(hintText: 'Enter with your email'),
           ),
           TextField(
             controller: passwordController,
             autocorrect: false,
             enableSuggestions: false,
             obscureText: true,
-            decoration:
-                const InputDecoration(hintText: 'Enter with your password'),
+            decoration: const InputDecoration(hintText: 'Enter with your password'),
           ),
           TextButton(
             child: const Text('Register'),
@@ -63,7 +61,9 @@ class _RegisterViewState extends State<RegisterView> {
                   params: AuthProviderParams(email: email, password: password),
                 );
                 await AuthService.firebase().sendEmailVerification();
-                Navigator.of(context).pushNamed(AppRoutes.verifyEmailRoute);
+                if (context.mounted) {
+                  Navigator.of(context).pushNamed(AppRoutes.verifyEmailRoute);
+                }
               } on WeekPasswordAuthException {
                 await showErrorDialog(context: context, text: 'Week password');
               } on EmailAlreadyInUseAuthException {
