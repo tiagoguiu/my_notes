@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
+import 'package:vandad_flutter_course/services/auth/firebase_auth_provider.dart';
 import 'package:vandad_flutter_course/views/views.dart';
+
+import 'services/auth/bloc/bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,15 +25,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: AppRoutes.homeRoute,
+      home: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(FirebaseAuthProvider()),
+        child: const HomeView(),
+      ),
       routes: {
         AppRoutes.homeRoute: (context) => const HomeView(),
         AppRoutes.loginRoute: (context) => const LoginView(),
         AppRoutes.registerRoute: (context) => const RegisterView(),
         AppRoutes.notesRoute: (context) => const NotesView(),
         AppRoutes.verifyEmailRoute: (context) => const VerifyEmailView(),
-        AppRoutes.createAndUpdateNotesRoute: (context) =>
-            const CreateUpdateNotesView(),
+        AppRoutes.createAndUpdateNotesRoute: (context) => const CreateUpdateNotesView(),
       },
     );
   }
