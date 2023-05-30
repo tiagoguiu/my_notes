@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:vandad_flutter_course/services/auth/auth.dart';
-import 'package:vandad_flutter_course/views/views.dart';
-
-
+/*
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -28,5 +24,22 @@ class HomeView extends StatelessWidget {
         }
       }),
     );
+  }
+}
+*/
+
+import 'package:flutter/material.dart';
+
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
   }
 }

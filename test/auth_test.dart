@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:vandad_flutter_course/services/auth/auth.dart';
 
 void main() {
@@ -16,8 +16,7 @@ void main() {
       test(
         'Cannot log out if not initialized',
         () {
-          expect(sut.logOut(),
-              throwsA(const TypeMatcher<NotInitializedException>()));
+          expect(sut.logOut(), throwsA(const TypeMatcher<NotInitializedException>()));
         },
       );
       test(
@@ -53,16 +52,14 @@ void main() {
               password: 'anyPassword',
             ),
           );
-          expect(badEmailUser,
-              throwsA(const TypeMatcher<UserNotFoundAuthException>()));
+          expect(badEmailUser, throwsA(const TypeMatcher<UserNotFoundAuthException>()));
           final badPasswordUser = sut.createUser(
             params: AuthProviderParams(
               email: 'anyEmail',
               password: 'foobar',
             ),
           );
-          expect(badPasswordUser,
-              throwsA(const TypeMatcher<WrongPasswordAuthException>()));
+          expect(badPasswordUser, throwsA(const TypeMatcher<WrongPasswordAuthException>()));
 
           final user = await sut.createUser(
             params: AuthProviderParams(
