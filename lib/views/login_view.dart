@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vandad_flutter_course/routes/routes.dart';
 import 'package:vandad_flutter_course/services/auth/auth.dart';
-import 'package:vandad_flutter_course/services/auth/bloc/auth_bloc.dart';
-import 'package:vandad_flutter_course/services/auth/bloc/auth_event.dart';
+import 'package:vandad_flutter_course/services/auth/bloc/bloc.dart';
 
 import '../utils/utils.dart';
 
@@ -54,21 +53,26 @@ class _LoginViewState extends State<LoginView> {
             obscureText: true,
             decoration: const InputDecoration(hintText: 'Enter with your password'),
           ),
-          TextButton(
-            child: const Text('Login'),
-            onPressed: () async {
-              try {
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if (state is AuthStateLoggedOut) {
+                if (state.exception is UserNotFoundAuthException) {
+                  await showErrorDialog(context: context, text: 'User not found');
+                } else if (state.exception is WrongPasswordAuthException) {
+                  await showErrorDialog(context: context, text: 'Wrong credentials');
+                } else {
+                  await showErrorDialog(context: context, text: 'Something went wrong, try again');
+                }
+              }
+            },
+            child: TextButton(
+              child: const Text('Login'),
+              onPressed: () async {
                 final email = emailController.text;
                 final password = passwordController.text;
                 context.read<AuthBloc>().add(AuthEventLogIn(email: email, password: password));
-              } on UserNotFoundAuthException {
-                await showErrorDialog(context: context, text: 'User not found');
-              } on WrongPasswordAuthException {
-                await showErrorDialog(context: context, text: 'Wrong credentials');
-              } on GenericAuthException {
-                await showErrorDialog(context: context, text: 'Something went wrong, try again');
-              }
-            },
+              },
+            ),
           ),
           TextButton(
             onPressed: () {
