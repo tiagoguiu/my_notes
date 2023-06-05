@@ -30,11 +30,6 @@ class MyApp extends StatelessWidget {
         child: const HomeView(),
       ),
       routes: {
-        AppRoutes.homeRoute: (context) => const HomeView(),
-        AppRoutes.loginRoute: (context) => const LoginView(),
-        AppRoutes.registerRoute: (context) => const RegisterView(),
-        AppRoutes.notesRoute: (context) => const NotesView(),
-        AppRoutes.verifyEmailRoute: (context) => const VerifyEmailView(),
         AppRoutes.createAndUpdateNotesRoute: (context) => const CreateUpdateNotesView(),
       },
     );

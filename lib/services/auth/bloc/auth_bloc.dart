@@ -3,14 +3,14 @@ import 'package:vandad_flutter_course/services/auth/auth.dart';
 import 'package:vandad_flutter_course/services/auth/bloc/bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(AuthProvider provider) : super(const AuthStateLoading()) {
+  AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized()) {
     on<AuthEventInitialize>(
       (event, emit) async {
         //HANDLING INITIALIZE EVENTS
         await provider.initialize();
         final user = provider.currentUser;
         if (user == null) {
-          emit(const AuthStateLoggedOut(null));
+          emit(const AuthStateLoggedOut(exception: null, isLoading: false));
         } else if (!user.isEmailVerified) {
           emit(const AuthStateNeedsVerification());
         } else {
@@ -19,17 +19,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
     );
 
+    on<AuthEventSendEmailVerification>(
+      (event, emit) async {
+        await provider.sendEmailVerification();
+        emit(state);
+      },
+    );
+
+    on<AuthEventRegister>(
+      (event, emit) async {
+        try {
+          await provider.createUser(
+            params: AuthProviderParams(
+              email: event.email,
+              password: event.password,
+            ),
+          );
+          await provider.sendEmailVerification();
+          emit(const AuthStateNeedsVerification());
+        } on Exception catch (e) {
+          emit(AuthStateRegistering(e));
+        }
+      },
+    );
+
     on<AuthEventLogIn>(
       (event, emit) async {
+        emit(const AuthStateLoggedOut(isLoading: true));
         final String email = event.email;
         final String password = event.password;
         try {
           final AuthUser user = await provider.logIn(params: AuthProviderParams(email: email, password: password));
-          emit(AuthStateLoggedIn(user: user));
+          if (!user.isEmailVerified) {
+            emit(const AuthStateLoggedOut(isLoading: false));
+            emit(const AuthStateNeedsVerification());
+          } else {
+            emit(const AuthStateLoggedOut(isLoading: false));
+            emit(AuthStateLoggedIn(user: user));
+          }
         } on Exception catch (e) {
-          emit(
-            AuthStateLoggedOut(e)
-          );
+          emit(AuthStateLoggedOut(exception: e, isLoading: false));
         }
       },
     );
@@ -37,11 +66,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventLogOut>(
       (event, emit) async {
         try {
-          emit(const AuthStateLoading());
           await provider.logOut();
-          emit(const AuthStateLoggedOut(null));
+          emit(const AuthStateLoggedOut(isLoading: false));
         } on Exception catch (e) {
-          emit(AuthStateLoggedOutFailure(exception: e));
+          emit(AuthStateLoggedOut(exception: e,isLoading: false));
         }
       },
     );
