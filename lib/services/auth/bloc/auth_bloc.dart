@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:vandad_flutter_course/services/auth/auth.dart';
-import 'package:vandad_flutter_course/services/auth/bloc/bloc.dart';
+
+import '../auth.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized(isLoading: true)) {
@@ -16,6 +16,45 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else {
           emit(AuthStateLoggedIn(user: user, isLoading: false));
         }
+      },
+    );
+
+    on<AuthEventForgotPassword>(
+      (event, emit) async {
+        emit(
+          const AuthStateForgotPassword(
+            isLoading: false,
+            exception: null,
+            hasSentEmail: false,
+          ),
+        );
+        final email = event.email;
+        if (email == null) {
+          return;
+        }
+        emit(
+          const AuthStateForgotPassword(
+            isLoading: true,
+            exception: null,
+            hasSentEmail: false,
+          ),
+        );
+        bool didSendEmail;
+        Exception? exception;
+        try {
+          await provider.sendPasswordReset(toEmail: email);
+          didSendEmail = true;
+        } on Exception catch (e) {
+          didSendEmail = false;
+          exception = e;
+        }
+        emit(
+          AuthStateForgotPassword(
+            isLoading: false,
+            exception: exception,
+            hasSentEmail: didSendEmail,
+          ),
+        );
       },
     );
 

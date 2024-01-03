@@ -13,15 +13,13 @@ class AuthService implements AuthProvider {
       );
 
   @override
-  Future<AuthUser> createUser({required AuthProviderParams params}) =>
-      provider.createUser(params: params);
+  Future<AuthUser> createUser({required AuthProviderParams params}) => provider.createUser(params: params);
 
   @override
   AuthUser? get currentUser => provider.currentUser;
 
   @override
-  Future<AuthUser> logIn({required AuthProviderParams params}) =>
-      provider.logIn(params: params);
+  Future<AuthUser> logIn({required AuthProviderParams params}) => provider.logIn(params: params);
 
   @override
   Future<void> logOut() => provider.logOut();
@@ -31,4 +29,7 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> initialize() => provider.initialize();
+
+  @override
+  Future<void> sendPasswordReset({required String toEmail}) => provider.sendPasswordReset(toEmail: toEmail);
 }

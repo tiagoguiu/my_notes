@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vandad_flutter_course/services/auth/auth.dart';
 import 'package:vandad_flutter_course/utils/utils.dart';
 
-import '../services/auth/bloc/bloc.dart';
-
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
 

@@ -8,8 +8,6 @@ import 'package:vandad_flutter_course/services/cloud/firebase_cloud_storage.dart
 import 'package:vandad_flutter_course/utils/utils.dart';
 import 'package:vandad_flutter_course/views/notes/components/components.dart';
 
-import '../../services/auth/bloc/bloc.dart';
-
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
 

@@ -18,6 +18,10 @@ class AuthEventLogIn extends AuthEvent {
   final String password;
   const AuthEventLogIn({required this.email, required this.password});
 }
+class AuthEventForgotPassword extends AuthEvent {
+  final String? email;
+  const AuthEventForgotPassword({this.email});
+}
 
 
 class AuthEventRegister extends AuthEvent {
